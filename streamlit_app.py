@@ -68,20 +68,19 @@ def generate_text(model, start_string, generation_length=1000):
 
     return (start_string + ''.join(text_generated))
 
-# Streamlit app
-st.title('Music Generation App')
 
-length = st.number_input('Enter length of generated text:', min_value=100, max_value=2000, step=100)
+def main():
+    st.title('Music Generation App')
 
-generated_text = generate_text(model, start_string="X", generation_length=length)
+    length = st.number_input('Enter length of generated text:', min_value=100, max_value=2000, step=100)
+    
+    generated_text = generate_text(model, start_string="X", generation_length=length)
+    st.write('Generated Audio:')
+    generated_songs = mdl.lab1.extract_song_snippet(generated_text)
+    for i, song in enumerate(generated_songs):
+        waveform = mdl.lab1.play_song(song)
+        if waveform:
+            st.audio(waveform.data, format='audio/wav', sample_rate=waveform.fs)
 
-st.write('Generated Text:')
-st.write(generated_text)
-
-st.write('Generated Audio:')
-
-generated_songs = mdl.lab1.extract_song_snippet(generated_text)
-for i, song in enumerate(generated_songs):
-    waveform = mdl.lab1.play_song(song)
-    if waveform:
-        st.audio(waveform.data, format='audio/wav', sample_rate=waveform.fs)
+if __name__ == "__main__":
+    main()
