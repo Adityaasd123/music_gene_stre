@@ -57,9 +57,9 @@ def generate_text(model, start_string, generation_length=1000):
     input_eval = tf.expand_dims(input_eval, 0)
     text_generated = []
     model.reset_states()
-    tqdm._instances.clear()
+    # tqdm._instances.clear()
 
-    for i in tqdm(range(generation_length)):
+    for i in (range(generation_length)):
         predictions = model(input_eval)
         predictions = tf.squeeze(predictions, 0)
         predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
