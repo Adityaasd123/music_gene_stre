@@ -2,3 +2,4 @@ tensorflow
 mitdeeplearning
 numpy
 streamlit
+matplotlib
